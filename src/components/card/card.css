@@ -1,0 +1,30 @@
+.solitaire__card,
+.solitaire__card-back,
+.solitaire__card-red {
+  width: 50px;
+  height: 70px;
+  background-color: white;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 24px;
+}
+
+.solitaire__card-red {
+  color: red;
+}
+
+.solitaire {
+  cursor: pointer;
+}
+.solitaire :active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.solitaire__card-flipped {
+  display: none;
+} 
+
+.solitaire__card-selected {
+  border: 2px solid red;
+}

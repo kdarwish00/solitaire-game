@@ -1,0 +1,35 @@
+.solitaire__deck-pile {
+  display: flex;
+  flex-direction: row;
+  width: 50px;
+  height: 72px;
+  border: 1px solid black;
+  margin-right: 1rem;
+}
+
+.solitaire__deck {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.solitaire__deck button {
+  height: 70px;
+  width: 70px;
+}
+
+.solitaire__tableau {
+  display: flex;
+  margin-left: 20px;
+}
+
+.solitaire__tableau-pile {
+  display: flex;
+  flex-direction: row;
+}
+
+.solitaire__tableau-pile-cards {
+  width: 14%;
+  margin: 1rem;
+  margin-top: 0;
+}
