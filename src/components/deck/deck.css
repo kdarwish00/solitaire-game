@@ -1,35 +1,51 @@
-.solitaire__deck-pile {
+* {
+  margin: 0;
+}
+
+.solitaire {
   display: flex;
-  flex-direction: row;
-  width: 50px;
-  height: 72px;
-  border: 1px solid black;
-  margin-right: 1rem;
 }
 
 .solitaire__deck {
   display: flex;
   flex-direction: row;
 }
+ .solitaire__button {
+  width: 120px;
+  height: 140px;
+ }
 
+.solitaire__button img{
+  width: 120px;
+  height: 140px;
+  margin: 20px;
 
-.solitaire__deck button {
-  height: 70px;
-  width: 70px;
+  border-radius: 15px;
 }
 
-.solitaire__tableau {
+.solitaire__deck-pile {
   display: flex;
-  margin-left: 20px;
+  align-content: center;
+  margin-top: 130px;
+  margin-left: 50px;
 }
+
+
 
 .solitaire__tableau-pile {
   display: flex;
   flex-direction: row;
+  align-content: flex-start;
+  margin-top: 270px;
+  margin-left: -289px;
 }
 
 .solitaire__tableau-pile-cards {
   width: 14%;
   margin: 1rem;
-  margin-top: 0;
+
+}
+
+.solitaire__card {
+  margin-top: -110px;
 }

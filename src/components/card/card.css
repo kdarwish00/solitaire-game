@@ -1,12 +1,26 @@
 .solitaire__card,
-.solitaire__card-back,
 .solitaire__card-red {
-  width: 50px;
-  height: 70px;
+  width: 120px;
+  height: 140px;
   background-color: white;
   border: 1px solid black;
   text-align: center;
-  font-size: 24px;
+  border-radius: 15px;
+}
+
+.solitaire__card h1,
+.solitaire__card-red h1 {
+  font-family: "Roboto", sans-serif;
+  font-size: 30px;
+  display: flex;
+  margin: 0;
+  margin-left: 5px;
+}
+
+.solitaire__card h2,
+.solitaire__card-red h2 {
+  font-size: 50px;
+  margin: 0;
 }
 
 .solitaire__card-red {
@@ -16,15 +30,20 @@
 .solitaire {
   cursor: pointer;
 }
-.solitaire :active {
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
+.solitaire__card :active {
+  box-shadow: 0 5px #666; 
+   transform: translateY(4px);
 }
 
-.solitaire__card-flipped {
-  display: none;
-} 
+.solitaire__card-flipped img {
+  width: 120px;
+  height: 140px;
 
+  border-radius: 15px;
+}
+.solitaire__card-flipped {
+  cursor: not-allowed;
+}
 .solitaire__card-selected {
   border: 2px solid red;
 }

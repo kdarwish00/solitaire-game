@@ -37,17 +37,16 @@ function Deck() {
       index++;
     }
   }
-
+  const [shuffledDeck, setShuffledDeck] = useState([]);
   const [deck, setDeck] = useState(cards);
-  const [firstCardSelected, setFirstCardSelected] = useState();
-  const [secondCardSelected, setSecondCardSelected] = useState();
+  const [firstCardSelected, setFirstCardSelected] = useState(null);
 
-  const shuffleDeck = () => {
-    const shuffledCards = shuffle([...deck]);
-    setDeck(shuffledCards);
-    setCurrentCardIndex(0);
-    dealCards();
-  };
+  // const shuffleDeck = () => {
+  //   const shuffledCards = shuffle([...deck]);
+  //   setDeck(shuffledCards);
+  //   setCurrentCardIndex(0);
+  //   dealCards();
+  // };
 
   const dealCards = () => {
     const deckCardCopy = [...deck];
@@ -66,7 +65,9 @@ function Deck() {
   };
 
   useEffect(() => {
-    shuffleDeck();
+    setShuffledDeck(shuffle(deck));
+    dealCards()
+    // shuffleDeck(cards);
   }, []);
 
   const nextCard = () => {
@@ -97,11 +98,9 @@ function Deck() {
     }
 
     setFirstCardSelected(selectedDeckCard);
-    setSecondCardSelected(null);
     setDealtCards([...dealtCardCopy]);
     setDeck([...deck]);
     console.log(firstCardSelected);
-    console.log(secondCardSelected);
   };
 
   const handleCardClick = (selectedDealtCard) => {
@@ -109,39 +108,44 @@ function Deck() {
     for (let i = 0; i < deck.length; i++) {
       deckCardCopy1[i].selected = false;
     }
-
     if (firstCardSelected === null) {
       setFirstCardSelected(selectedDealtCard);
+      console.log();
     } else {
-      setSecondCardSelected(selectedDealtCard);
       if (selectedDealtCard.rank === firstCardSelected.rank + 1) {
         let removedCard = firstCardSelected;
         let deckCardCopy = [];
-        console.log(firstCardSelected);
         if (deck.some((card) => card.index === firstCardSelected.index)) {
           deckCardCopy = deck.filter(
             (card) => card.index !== firstCardSelected.index
           );
-          console.log(deck);
-          console.log(deckCardCopy);
         } else {
           deckCardCopy = [...deck];
         }
-
+//code that is not working properly
         let dealtCardCopy = [...dealtCards];
         for (let i = 0; i < dealtCardCopy.length; i++) {
           if (dealtCardCopy[i].includes(selectedDealtCard)) {
-            dealtCardCopy[i].splice(dealtCardCopy[i].length, 0, removedCard);
+            let indexOfRemovedCard =
+              dealtCardCopy[i].indexOf(selectedDealtCard);
+            let splicedOutCard = dealtCardCopy[i].splice(
+              indexOfRemovedCard,
+              1
+            )[0];
+            for (let j = 0; j < dealtCardCopy.length; j++) {
+              if (dealtCardCopy[j].includes(firstCardSelected)) {
+                dealtCardCopy[j].push(splicedOutCard);
+                break;
+              }
+            }
             break;
           }
         }
-        setDeck(deckCardCopy);
         setDealtCards(dealtCardCopy);
+        setDeck(deckCardCopy);
         setFirstCardSelected(null);
-        setSecondCardSelected(null);
       } else {
         setFirstCardSelected(null);
-        setSecondCardSelected(null);
       }
     }
 
@@ -158,27 +162,31 @@ function Deck() {
     if (firstCardSelected) {
       console.log(firstCardSelected.rank);
     }
-    if (secondCardSelected) {
-      console.log(secondCardSelected.rank);
-    }
     console.log(dealtCards);
   };
 
   return (
-    <div className="solitaire__deck">
-      <div className="solitaire__deck-pile">
-        {deck.length > 0 && (
-          <Card
-            key={currentCardIndex}
-            suit={deck[currentCardIndex].suit}
-            value={deck[currentCardIndex].value}
-            selected={deck[currentCardIndex].selected}
-            onClick={() => handleDeckPileClick(deck[currentCardIndex])}
-          />
-        )}
+    <div className="solitaire">
+      <div className="solitaire__button" onClick={nextCard}>
+        <img
+          src="https://i.pinimg.com/originals/8b/87/4a/8b874ac3b63e483339cbdb05a15fb716.jpg"
+          alt="Next Card"
+        />
       </div>
 
-      <button onClick={nextCard}>Next Card</button>
+      <div className="solitaire__deck">
+        <div className="solitaire__deck-pile">
+          {deck.length > 0 && (
+            <Card
+              key={currentCardIndex}
+              suit={deck[currentCardIndex].suit}
+              value={deck[currentCardIndex].value}
+              selected={deck[currentCardIndex].selected}
+              onClick={() => handleDeckPileClick(deck[currentCardIndex])}
+            />
+          )}
+        </div>
+      </div>
 
       <div className="solitaire__tableau-pile">
         {dealtCards.map((pile, i) => (
