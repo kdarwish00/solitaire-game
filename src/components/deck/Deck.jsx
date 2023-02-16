@@ -34,6 +34,7 @@ function Deck() {
   //sets values of props for each card
   //rank 0-12
   //index 0-51
+  //hi
   for (let i = 0; i < suits.length; i++) {
     for (let j = 0; j < values.length; j++) {
       cards.push({ index: index, suit: suits[i], value: values[j], rank: j });
