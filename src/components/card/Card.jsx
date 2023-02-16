@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./card.css";
 
-const Card = ({ suit, value, rank, index, flipped, selected, onClick }) => {
+const Card = ({ suit, value, rank, index, flipped, selected, onClick, onDoubleClick }) => {
   return (
     <div className="solitaire">
       <div
@@ -12,6 +12,7 @@ const Card = ({ suit, value, rank, index, flipped, selected, onClick }) => {
         onClick={onClick}
         rank={rank}
         index={index}
+        onDoubleClick={onDoubleClick}
       >
         {flipped ? (
           <img
