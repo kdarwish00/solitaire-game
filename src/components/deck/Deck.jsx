@@ -45,12 +45,7 @@ function Deck() {
   const [deck, setDeck] = useState(cards);
   const [firstCardSelected, setFirstCardSelected] = useState(null);
   const [secondCardSelected, setSecondCardSelected] = useState(null);
-  const [aceCardPile, setAceCardPile] = useState([
-    { suit: "♥", cards: [] },
-    { suit: "♦", cards: [] },
-    { suit: "♣", cards: [] },
-    { suit: "♠", cards: [] },
-  ]);
+  const [acePiles, setAcePiles] = useState([[], [], [], []]);
 
   const dealCards = () => {
     const deckCardCopy = [...deck];
@@ -96,15 +91,76 @@ function Deck() {
         dealtCardCopy[i][j].selected = false;
       }
     }
-    if (firstCardSelected) {
+    // Handles movement of Ace to the ace pile from deck pile
+    if (selectedDeckCard.rank === 0) {
+      const suit = selectedDeckCard.suit;
+      const acePileIndex = ["♠", "♣", "♥", "♦"].indexOf(suit);
+      if (acePiles[acePileIndex].length === 0) {
+        let deckCardCopy = [];
+        // Remove card from deck cards
+        deckCardCopy = deck.filter(
+          (card) => card.index !== selectedDeckCard.index
+        );
+        // Add card to ace pile
+        acePiles[acePileIndex].push(selectedDeckCard);
+        setDeck(deckCardCopy);
+        setAcePiles(acePiles);
+        setFirstCardSelected(null);
+      }
     }
+    // Handles movement of King to an empty array from deck pile
+    else if (selectedDeckCard.rank === 12) {
+      // Find the index of an empty subarray in dealtCards
+      const dealtCardCopy1 = [...dealtCards];
+      const emptySubarrayIndex = dealtCardCopy.findIndex(
+        (subarray) => subarray.length === 0
+      );
+
+      if (emptySubarrayIndex !== -1) {
+        //remove card from deck pile
+        let deckCardCopy = [];
+
+        // Remove card from deck cards
+        deckCardCopy = deck.filter(
+          (card) => card.index !== selectedDeckCard.index
+        );
+        // Move the card to the empty subarray
+        dealtCardCopy1[emptySubarrayIndex].push(selectedDeckCard);
+        setDeck(deckCardCopy);
+        setDealtCards(dealtCardCopy1);
+        console.log(selectedDeckCard.rank);
+      }
+    }
+
+    // Handles movement of other cards to the ace pile
+    else if (selectedDeckCard !== 0) {
+      const suit = selectedDeckCard.suit;
+      const acePileIndex = ["♠", "♣", "♥", "♦"].indexOf(suit);
+      if (acePiles[acePileIndex].length !== 0) {
+        let deckCardCopy = [];
+        //remove Card from deck pile
+        deckCardCopy = deck.filter(
+          (card) => card.index !== selectedDeckCard.index
+        );
+        // Check if the selected card can be added to the ace pile
+        const lastAceCard =
+          acePiles[acePileIndex][acePiles[acePileIndex].length - 1];
+        if (selectedDeckCard.rank === lastAceCard.rank + 1) {
+          // Add card to ace pile
+          acePiles[acePileIndex].push(selectedDeckCard);
+        }
+        setDeck(deckCardCopy);
+      }
+    } else {
+      setDeck(deck);
+    }
+
     setFirstCardSelected(selectedDeckCard);
     setSecondCardSelected(null);
     setDealtCards([...dealtCardCopy]);
-    setDeck([...deck]);
+    console.log(selectedDeckCard.rank);
     //console.log(firstCardSelected);
   };
-
   const handleCardClick = (selectedDealtCard) => {
     let dealtCardCopy = [...dealtCards];
     const deckCardCopy1 = [...deck];
@@ -113,11 +169,11 @@ function Deck() {
     for (let i = 0; i < deck.length; i++) {
       deckCardCopy1[i].selected = false;
     }
+
     //if the card clicked is the first card to be clicked
     //then we can set it in state to compare with the next card
     if (firstCardSelected === null) {
       setFirstCardSelected(selectedDealtCard);
-      console.log(firstCardSelected.index);
     } else {
       setSecondCardSelected(selectedDealtCard);
       //to ensure cards are picked in order with the correct coresponding suits, handles dealt card to dealt
@@ -134,6 +190,7 @@ function Deck() {
             ["♠", "♣"].includes(selectedDealtCard.suit)))
       ) {
         let deckCardCopy = [];
+        //Removes card from deck pile
         if (deck.some((card) => card.index === firstCardSelected.index)) {
           deckCardCopy = deck.filter(
             (card) => card.index !== firstCardSelected.index
@@ -146,28 +203,56 @@ function Deck() {
         } else {
           deckCardCopy = [...deck];
         }
-
+        let deckSplice = [];
+        let z = false;
         for (let i = 0; i < dealtCardCopy.length; i++) {
           if (dealtCardCopy[i].includes(firstCardSelected)) {
             let indexOfRemovedCard =
               dealtCardCopy[i].indexOf(firstCardSelected);
+            //Splices to the end of the deck
+            if (indexOfRemovedCard > 0) {
+              dealtCardCopy[i][indexOfRemovedCard - 1].flipped = false;
+            }
+            if (indexOfRemovedCard < dealtCardCopy[i].length - 1) {
+              for (
+                let x = indexOfRemovedCard;
+                x < dealtCardCopy[i].length;
+                x++
+              ) {
+                deckSplice.push(dealtCardCopy[i][x]);
+                z = true;
+              }
+            }
+
             let splicedOutCard = dealtCardCopy[i].splice(
               indexOfRemovedCard,
               1
             )[0];
             if (indexOfRemovedCard === dealtCardCopy[i].length - 1) {
-              console.log('hello')
             }
-             console.log(dealtCardCopy[i].length)
-             console.log(indexOfRemovedCard)
-            if (
-              dealtCardCopy[i][dealtCardCopy[i].length - 1].flipped === true
-            ) {
-              dealtCardCopy[i][dealtCardCopy[i].length - 1].flipped = false;
+            // handles error of single card array not pushing
+            if (dealtCardCopy[i][dealtCardCopy[i].length - 1] !== undefined) {
+              if (
+                dealtCardCopy[i][dealtCardCopy[i].length - 1].flipped === true
+              ) {
+                dealtCardCopy[i][dealtCardCopy[i].length - 1].flipped = false;
+              }
             }
+
             //console.log(splicedOutCard)
             for (let j = 0; j < dealtCardCopy.length; j++) {
               if (dealtCardCopy[j].includes(selectedDealtCard)) {
+                if (z) {
+                  dealtCardCopy[j].push(...deckSplice);
+                  for (
+                    let v = indexOfRemovedCard;
+                    v < dealtCardCopy[i].length;
+                    v++
+                  ) {
+                    dealtCardCopy[i].pop();
+                  }
+                  break;
+                }
                 dealtCardCopy[j].push(firstCardSelected);
                 break;
               }
@@ -177,6 +262,108 @@ function Deck() {
         }
         setDealtCards(dealtCardCopy);
         setDeck(deckCardCopy);
+        setFirstCardSelected(null);
+        // Handles logic for movement to ace pile from dealtCards
+      } else if (
+        selectedDealtCard.rank === 0 &&
+        selectedDealtCard.flipped === false
+      ) {
+        const suit = selectedDealtCard.suit;
+        const acePileIndex = ["♠", "♣", "♥", "♦"].indexOf(suit);
+        if (acePiles[acePileIndex].length === 0) {
+          const dealtCardCopy = [...dealtCards];
+          const deckCardCopy = [...deck];
+          // Remove card from dealt cards
+          for (let i = 0; i < dealtCardCopy.length; i++) {
+            const index = dealtCardCopy[i].indexOf(selectedDealtCard);
+            if (index !== -1) {
+              if (dealtCardCopy[i].length > 1) {
+                dealtCardCopy[i][index - 1].flipped = false;
+                console.log(suit);
+                dealtCardCopy[i].splice(index, 1);
+              } else {
+                dealtCardCopy[i].splice(index, 1);
+              }
+              break;
+            }
+          }
+          // Add card to ace pile
+          acePiles[acePileIndex].push(selectedDealtCard);
+          setDealtCards(dealtCardCopy);
+          setAcePiles(acePiles);
+          setFirstCardSelected(null);
+        }
+        // Handles movement of King to an empty array from dealtCards array
+      } else if (
+        selectedDealtCard.rank === 12 &&
+        selectedDealtCard.flipped === false
+      ) {
+        let dealtCardCopy = [...dealtCards];
+
+        // Find the index of the subarray that contains the selected card
+        const selectedSubarrayIndex = dealtCards.findIndex((subarray) =>
+          subarray.includes(selectedDealtCard)
+        );
+
+        // Find the empty array index
+        const emptySubarrayIndex = dealtCards.findIndex(
+          (subarray) => subarray.length === 0
+        );
+
+        if (emptySubarrayIndex !== -1) {
+          const selectedCardIndex =
+            dealtCards[selectedSubarrayIndex].indexOf(selectedDealtCard);
+
+          // Create a new array containing all the cards on top of the selected card
+          const cardsToMove =
+            dealtCards[selectedSubarrayIndex].splice(selectedCardIndex);
+
+          // Flip the card before the selected card in the old subarray
+          const cardBeforeSelectedIndex = selectedCardIndex - 1;
+          if (cardBeforeSelectedIndex >= 0) {
+            dealtCards[selectedSubarrayIndex][
+              cardBeforeSelectedIndex
+            ].flipped = false;
+          }
+
+          // Move the cards to the empty subarray
+          dealtCardCopy[emptySubarrayIndex].push(...cardsToMove);
+          setDealtCards([...dealtCards]);
+        }
+      } else if (
+        selectedDealtCard.rank !== 0 &&
+        selectedDealtCard.flipped === false
+      ) {
+        const suit = selectedDealtCard.suit;
+        const acePileIndex = ["♠", "♣", "♥", "♦"].indexOf(suit);
+        let acePilesCopy = [...acePiles];
+        let dealtCardCopy = [...dealtCards];
+        if (acePiles[acePileIndex].length !== 0) {
+          const lastCard = acePiles[acePileIndex].slice(-1)[0];
+          if (
+            lastCard.rank === selectedDealtCard.rank - 1 &&
+            lastCard.suit === selectedDealtCard.suit
+          ) {
+            // Add card to Ace Pile
+            acePilesCopy[acePileIndex].push(selectedDealtCard);
+            // Remove card from Dealt Cards
+            for (let i = 0; i < dealtCardCopy.length; i++) {
+              const index = dealtCardCopy[i].indexOf(selectedDealtCard);
+              if (index !== -1) {
+                if (dealtCardCopy[i].length > 1) {
+                  dealtCardCopy[i][index - 1].flipped = false;
+                  console.log(suit);
+                  dealtCardCopy[i].splice(index, 1);
+                } else {
+                  dealtCardCopy[i].splice(index, 1);
+                }
+                break;
+              }
+            }
+          }
+        }
+        setDealtCards(dealtCardCopy);
+        setAcePiles(acePilesCopy);
         setFirstCardSelected(null);
       } else {
         setFirstCardSelected(null);
@@ -190,31 +377,12 @@ function Deck() {
       let lastCardIndex = dealtCards[i].length - 1;
       if (dealtCards[i][lastCardIndex] === selectedDealtCard) {
         dealtCards[i][lastCardIndex].selected = true;
+        console.log(firstCardSelected);
+        console.log(secondCardSelected);
       }
       setDealtCards([...dealtCards]);
     }
     //console.log(dealtCards);
-  };
-
-  const handleAcePileClick = (selectedCard) => {
-    const cardSuit = selectedCard.suit;
-    const cardRank = selectedCard.rank;
-    const suitIndex = aceCardPile.findIndex((obj) => obj.suit === cardSuit);
-
-    // Find the suit object in the acePile state that matches the card suit
-    const suitObj = aceCardPile.find((obj) => obj.suit === cardSuit);
-    if (suitObj) {
-      // Check if the selected card is the next card in the acePile array for its suit
-      const lastCardIndex = suitObj.cards.length - 1;
-      const lastCardRank =
-        lastCardIndex >= 0 ? suitObj.cards[lastCardIndex].rank : 0;
-
-      if (
-        cardRank === lastCardRank + 1 ||
-        (lastCardRank === null && cardRank === 0)
-      ) {
-      }
-    }
   };
 
   return (
@@ -235,7 +403,6 @@ function Deck() {
               value={deck[currentCardIndex].value}
               selected={deck[currentCardIndex].selected}
               onClick={() => handleDeckPileClick(deck[currentCardIndex])}
-              onDoubleClick={() => handleAcePileClick(deck[currentCardIndex])}
             />
           )}
         </div>
@@ -251,30 +418,31 @@ function Deck() {
                 value={card.value}
                 flipped={card.flipped}
                 selected={card.selected}
-                className="solitaire__card"
+                className="solitaire__card-tableau_cards"
                 onClick={() => handleCardClick(card)}
-                onDoubleClick={() => handleAcePileClick(card)}
               />
             ))}
           </div>
         ))}
       </div>
-
-      <div className="ace-piles">
-        {aceCardPile.map((obj, index) => (
-          <div className="ace-pile" key={index}>
-            <div className="ace-pile-title">{obj.suit}</div>
-            <div className="ace-pile-cards">
-              {obj.cards.map((card, cardIndex) => (
+      <div className="solitaire__ace-pile">
+        <div className="solitaire__ace-pile-piles">
+          {acePiles.map((pile, index) => (
+            <div key={index} className="solitaire__ace-pile-cards">
+              {pile.length > 0 && (
                 <Card
-                  key={cardIndex}
-                  card={card}
-                  onClick={() => handleAcePileClick(card)}
+                  suit={pile[pile.length - 1].suit}
+                  value={pile[pile.length - 1].value}
+                  rank={pile[pile.length - 1].rank}
+                  flipped={false}
+                  selected={false}
+                  className="solitaire__card"
+                  onClick={() => handleCardClick(pile[pile.length - 1])}
                 />
-              ))}
+              )}
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
