@@ -9,6 +9,7 @@
 .solitaire__deck {
   display: flex;
   flex-direction: row;
+  margin-top: 0;
 }
  .solitaire__button {
   width: 120px;
@@ -26,7 +27,7 @@
 .solitaire__deck-pile {
   display: flex;
   align-content: center;
-  margin-top: 130px;
+  margin-top: 20px;
   margin-left: 50px;
 }
 
@@ -37,7 +38,7 @@
   flex-direction: row;
   align-content: flex-start;
   margin-top: 300px;
-  /* margin-left: -289px; */
+  margin-left: -289px;
 }
 
 .solitaire__tableau-pile-cards {
@@ -49,7 +50,7 @@
 .solitaire__ace-pile-piles {
   display: flex;
   flex-direction: row;
-  margin-left: -700px;
+  margin-left: -650px;
 
 }
 .solitaire__ace-pile-cards {
@@ -63,5 +64,11 @@
 }
 
 .solitaire__card {
+  /* margin-top: -115px; */
+}
+
+.solitaire__card-tableau {
   margin-top: -115px;
+  border: 1px black solid;
+
 }

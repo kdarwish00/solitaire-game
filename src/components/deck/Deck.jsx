@@ -74,6 +74,7 @@ function Deck() {
     } else {
       setCurrentCardIndex((currentCardIndex) => currentCardIndex + 1);
     }
+    setFirstCardSelected(null)
   };
 
   const handleDeckPileClick = (selectedDeckCard) => {
@@ -126,6 +127,7 @@ function Deck() {
         );
         // Move the card to the empty subarray
         dealtCardCopy1[emptySubarrayIndex].push(selectedDeckCard);
+        selectedDeckCard.selected = false
         setDeck(deckCardCopy);
         setDealtCards(dealtCardCopy1);
         console.log(selectedDeckCard.rank);
@@ -158,7 +160,9 @@ function Deck() {
     setFirstCardSelected(selectedDeckCard);
     setSecondCardSelected(null);
     setDealtCards([...dealtCardCopy]);
-    console.log(selectedDeckCard.rank);
+    console.log(selectedDeckCard);
+    console.log(selectedDeckCard);
+
     //console.log(firstCardSelected);
   };
   const handleCardClick = (selectedDealtCard) => {
@@ -410,9 +414,9 @@ function Deck() {
 
       <div className="solitaire__tableau-pile">
         {dealtCards.map((pile, i) => (
-          <div className="solitaire__tableau-pile-cards" key={i}>
+          <div className="solitaire__tableau-pile-cards" key={i} >
             {pile.map((card, j) => (
-              <Card
+              <Card 
                 key={j}
                 suit={card.suit}
                 value={card.value}
@@ -420,6 +424,7 @@ function Deck() {
                 selected={card.selected}
                 className="solitaire__card-tableau_cards"
                 onClick={() => handleCardClick(card)}
+                tableau={true}
               />
             ))}
           </div>
