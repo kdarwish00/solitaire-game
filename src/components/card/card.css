@@ -32,7 +32,7 @@
 }
 .solitaire__card :active {
   box-shadow: 0 5px #666; 
-   transform: translateY(4px);
+  transform: translateY(4px);
 }
 
 .solitaire__card-flipped img {

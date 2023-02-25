@@ -63,12 +63,17 @@
   margin-top: 20px;
 }
 
-.solitaire__card {
-  /* margin-top: -115px; */
-}
 
 .solitaire__card-tableau {
   margin-top: -115px;
   border: 1px black solid;
 
+}
+.solitaire__card-tableau :active {
+  border: 2px solid red;
+  border-radius: 15px;
+  height: 140px;
+  width: 120px;
+  margin-top: -40px;
+  
 }
