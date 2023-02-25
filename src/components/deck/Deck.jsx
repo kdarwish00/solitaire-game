@@ -212,8 +212,7 @@ function Deck() {
         } else {
           deckCardCopy = [...deck];
         }
-        let deckSlice = [];
-
+        let deckSplice = [];
         let z = false;
         for (let i = 0; i < dealtCardCopy.length; i++) {
           if (dealtCardCopy[i].includes(firstCardSelected)) {
@@ -229,13 +228,14 @@ function Deck() {
                 x < dealtCardCopy[i].length;
                 x++
               ) {
-                deckSlice.push(dealtCardCopy[i][x]);
+                deckSplice.push(dealtCardCopy[i][x]);
                 z = true;
               }
             }
 
-            let slicedOutCards = dealtCardCopy[i].slice(
-              indexOfRemovedCard
+            let splicedOutCard = dealtCardCopy[i].splice(
+              indexOfRemovedCard,
+              1
             )[0];
             if (indexOfRemovedCard === dealtCardCopy[i].length - 1) {
             }
@@ -252,7 +252,7 @@ function Deck() {
             for (let j = 0; j < dealtCardCopy.length; j++) {
               if (dealtCardCopy[j].includes(selectedDealtCard)) {
                 if (z) {
-                  dealtCardCopy[j].push(...deckSlice);
+                  dealtCardCopy[j].push(...deckSplice);
                   for (
                     let v = indexOfRemovedCard;
                     v < dealtCardCopy[i].length;
