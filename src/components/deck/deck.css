@@ -1,79 +1,43 @@
-* {
-  margin: 0;
+  .solitaire {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr) ;
+  grid-template-rows: 140px;
 }
-
-.solitaire {
-  display: flex;
-}
-
-.solitaire__deck {
-  display: flex;
-  flex-direction: row;
-  margin-top: 0;
-}
- .solitaire__button {
-  width: 120px;
-  height: 140px;
- }
 
 .solitaire__button img{
   width: 120px;
-  height: 140px;
-  margin: 20px;
+  height: 145px;
 
   border-radius: 15px;
 }
-
 .solitaire__deck-pile {
   display: flex;
   align-content: center;
-  margin-top: 20px;
-  margin-left: 50px;
 }
-
-
 
 .solitaire__tableau-pile {
-  display: flex;
-  flex-direction: row;
-  align-content: flex-start;
-  margin-top: 300px;
-  margin-left: -289px;
+  display: grid;
+  grid-auto-flow: column;
 }
 
-.solitaire__tableau-pile-cards {
-  width: 14%;
-  margin: 1rem;
+.solitaire__card-tableau {
+  border: 1px black solid;
+  height: 140px;
+  width: 120px;
+  margin-top: 2rem;
 
 }
 
 .solitaire__ace-pile-piles {
   display: flex;
-  flex-direction: row;
-  margin-left: -650px;
-
+  
 }
 .solitaire__ace-pile-cards {
   border: 1px black solid;
   height: 140px;
   width: 120px;
-  display: flex;
-  flex-direction: row;
-  margin: 1rem;
-  margin-top: 20px;
-}
+  margin-right: 1rem;
 
+}  
 
-.solitaire__card-tableau {
-  margin-top: -115px;
-  border: 1px black solid;
-
-}
-.solitaire__card-tableau :active {
-  border: 2px solid red;
-  border-radius: 15px;
-  height: 140px;
-  width: 120px;
-  margin-top: -40px;
-  
-}
