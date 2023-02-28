@@ -1,8 +1,9 @@
-  .solitaire {
+.solitaire {
   display: grid;
   gap: 1.5rem;
   grid-template-columns: repeat(3, 1fr) ;
-  grid-template-rows: 140px;
+  grid-template-rows: 30px;
+
 }
 
 .solitaire__button img{
@@ -13,20 +14,26 @@
 }
 .solitaire__deck-pile {
   display: flex;
-  align-content: center;
 }
 
 .solitaire__tableau-pile {
   display: grid;
-  grid-auto-flow: column;
+  grid-template-columns: repeat(7,1fr);
+  position: relative;
+  right: 339px;
+
+
 }
 
-.solitaire__card-tableau {
-  border: 1px black solid;
-  height: 140px;
-  width: 120px;
+.solitaire__tableau-pile-cards {
+  margin-right: 2rem;
   margin-top: 2rem;
 
+}
+.solitaire__card-tableau {
+  border-radius: 15px;
+  height: 140px;
+  width: 120px;
 }
 
 .solitaire__ace-pile-piles {
@@ -35,9 +42,18 @@
 }
 .solitaire__ace-pile-cards {
   border: 1px black solid;
+  border-radius: 15px;
   height: 140px;
   width: 120px;
-  margin-right: 1rem;
+  margin-right: 3rem;
 
 }  
 
+.solitaire__empty-card{
+  border: 1px black solid;
+  border-radius: 15px;
+  height: 140px;
+  width: 120px;
+  
+
+}

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "./card.css";
 
-const Card = ({ suit, value, rank, index, flipped, selected, onClick, onDoubleClick, tableau }) => {
+const Card = ({ suit, value, rank, index, flipped, selected, onClick, onDoubleClick, tableau, key }) => {
   return (
-    <div className="solitaire">
+    <div className="solitaire"
+    style={{ marginTop: key && (key > 0 ? `-80px` : '') }}
+    >
       <div
         className={`solitaire__card ${
           suit === "♥" || suit === "♦" ? "solitaire__card-red" : ""

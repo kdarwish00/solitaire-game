@@ -399,6 +399,7 @@ function Deck() {
     }
     //console.log(dealtCards);
     console.log(selectedDealtCard.selected);
+    console.log(selectedDealtCard.cn)
   };
 
   return (
@@ -435,31 +436,35 @@ function Deck() {
                   rank={pile[pile.length - 1].rank}
                   flipped={false}
                   selected={false}
-                  className="solitaire__card"
+                  cn="solitaire__card"
                   onClick={() => handleCardClick(pile[pile.length - 1])}
                 />
               )}
             </div>
           ))}
         </div>
-      <div className="solitaire__tableau-pile">
-        {dealtCards.map((pile, i) => (
-          <div className="solitaire__tableau-pile-cards" key={i}>
-            {pile.map((card, j) => (
-              <Card
-                key={j}
-                suit={card.suit}
-                value={card.value}
-                flipped={card.flipped}
-                selected={card.selected}
-                className="solitaire__card-tableau_cards"
-                onClick={() => handleCardClick(card)}
-                tableau={true}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
+        <div className="solitaire__tableau-pile">
+          {dealtCards.map((pile, i) => (
+            <div className="solitaire__tableau-pile-cards" key={i}>
+              <div className="solitaire__empty-card">
+              {pile.map((card, j) => {
+                return (
+                  <Card
+                    key={j}
+                    suit={card.suit}
+                    value={card.value}
+                    flipped={card.flipped}
+                    selected={card.selected}
+                    className="solitaire__card-tableau_cards"
+                    onClick={() => handleCardClick(card)}
+                    tableau={true}
+                  />
+                );
+              })}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
