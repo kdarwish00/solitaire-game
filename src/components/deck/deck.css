@@ -20,13 +20,13 @@
   display: grid;
   grid-template-columns: repeat(7,1fr);
   position: relative;
-  right: 339px;
+  right: 290px;
 
 
 }
 
 .solitaire__tableau-pile-cards {
-  margin-right: 2rem;
+  margin-right: 1.5rem;
   margin-top: 2rem;
 
 }
@@ -56,4 +56,10 @@
   width: 120px;
   
 
+}
+.soliatire__empty-deckcard {
+  border: 1px black solid;
+  height: 140px;
+  width: 120px;
+  border-radius: 15px;
 }

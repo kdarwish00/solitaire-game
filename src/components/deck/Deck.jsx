@@ -98,9 +98,9 @@ function Deck() {
       const suit = selectedDeckCard.suit;
       const acePileIndex = ["♠", "♣", "♥", "♦"].indexOf(suit);
       if (acePiles[acePileIndex].length === 0) {
-        let deckCardCopy = [];
+        let deckCardCopy = [...deck]; // make a copy of the array
         // Remove card from deck cards
-        deckCardCopy = deck.filter(
+        deckCardCopy = deckCardCopy.filter(
           (card) => card.index !== selectedDeckCard.index
         );
         console.log(
@@ -112,7 +112,6 @@ function Deck() {
         setDeck(deckCardCopy);
         setAcePiles(acePiles);
         setFirstCardSelected(null);
-        console.log(selectedDeckCard);
       }
     }
     // Handles movement of King to an empty array from deck pile
@@ -254,7 +253,6 @@ function Deck() {
               }
             }
 
-            //console.log(splicedOutCard)
             for (let j = 0; j < dealtCardCopy.length; j++) {
               if (dealtCardCopy[j].includes(selectedDealtCard)) {
                 if (z) {
@@ -275,9 +273,24 @@ function Deck() {
             break;
           }
         }
+
+        if (selectedDealtCard === 12) {
+          const emptyArray = dealtCardCopy.find((arr) => arr.length === 0);
+          if (emptyArray) {
+            const selectedCardIndex = dealtCardCopy.findIndex((arr) =>
+              arr.includes(selectedDealtCard)
+            );
+            const cardsToMove = dealtCardCopy[selectedCardIndex].splice(
+              dealtCardCopy[selectedCardIndex].indexOf(firstCardSelected)
+            );
+            emptyArray.push(...cardsToMove);
+          }
+        }
+
         setDealtCards(dealtCardCopy);
         setDeck(deckCardCopy);
         setFirstCardSelected(null);
+
         // Handles logic for movement to ace pile from dealtCards
       } else if (
         selectedDealtCard.rank === 0 &&
@@ -310,8 +323,7 @@ function Deck() {
         }
         // Handles movement of King to an empty array from dealtCards array
       } else if (
-        selectedDealtCard.rank === 12 &&
-        selectedDealtCard.flipped === false
+        selectedDealtCard.rank === 12 
       ) {
         let dealtCardCopy = [...dealtCards];
 
@@ -346,8 +358,9 @@ function Deck() {
           setDealtCards([...dealtCards]);
         }
       } else if (
-        selectedDealtCard.rank !== 0 &&
-        selectedDealtCard.flipped === false
+        selectedDealtCard.rank !== 0
+        //&&
+        // selectedDealtCard.flipped === false
       ) {
         const suit = selectedDealtCard.suit;
         const acePileIndex = ["♠", "♣", "♥", "♦"].indexOf(suit);
@@ -399,8 +412,19 @@ function Deck() {
     }
     //console.log(dealtCards);
     console.log(selectedDealtCard.selected);
-    console.log(selectedDealtCard.cn)
   };
+
+  const handleAcePileClick = (selectedAceCard) => {
+    selectedAceCard.selected = true
+    if (firstCardSelected === null) {
+      setFirstCardSelected(selectedAceCard)
+      setSecondCardSelected(null)
+      
+    }
+
+
+    }
+  
 
   return (
     <div className="solitaire">
@@ -413,6 +437,7 @@ function Deck() {
 
       <div className="solitaire__deck">
         <div className="solitaire__deck-pile">
+          <div className="soliatire__empty-deckcard">
           {deck.length > 0 && deck[currentCardIndex] && (
             <Card
               key={currentCardIndex}
@@ -422,6 +447,7 @@ function Deck() {
               onClick={() => handleDeckPileClick(deck[currentCardIndex])}
             />
           )}
+          </div>
         </div>
       </div>
 
@@ -447,20 +473,20 @@ function Deck() {
           {dealtCards.map((pile, i) => (
             <div className="solitaire__tableau-pile-cards" key={i}>
               <div className="solitaire__empty-card">
-              {pile.map((card, j) => {
-                return (
-                  <Card
-                    key={j}
-                    suit={card.suit}
-                    value={card.value}
-                    flipped={card.flipped}
-                    selected={card.selected}
-                    className="solitaire__card-tableau_cards"
-                    onClick={() => handleCardClick(card)}
-                    tableau={true}
-                  />
-                );
-              })}
+                {pile.map((card, j) => {
+                  return (
+                    <Card
+                      key={j}
+                      suit={card.suit}
+                      value={card.value}
+                      flipped={card.flipped}
+                      selected={card.selected}
+                      className="solitaire__card-tableau_cards"
+                      onClick={() => handleCardClick(card)}
+                      tableau={true}
+                    />
+                  );
+                })}
               </div>
             </div>
           ))}
