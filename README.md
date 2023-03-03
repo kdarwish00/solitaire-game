@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# Solitaire
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to Solitaire, a classic card game played all around the world. This version of Solitaire is played with a single deck of cards and is a single-player game. this was written using React and Redux and styled with CSS. 
 
-## Available Scripts
+## Objective
+The objective of Solitaire is to move all the cards to the four foundation piles, each representing a suit. The foundation piles must be built up in ascending order, starting with the Ace and ending with the King.
 
-In the project directory, you can run:
+## Game Play
+### The Tableau
+The Tableau is where the bulk of the game is played. It consists of seven columns of cards, with each column containing one more card than the previous column. The first card in each column is face-up, while the rest of the cards are face-down.
 
-### `npm start`
+You can move a card from one tableau column to another tableau column if the top card in the column you are moving the card to is of the opposite color and one rank higher than the card you are moving.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### The Foundation Piles
+The Foundation Piles are where you want to move all of your cards. You can move a card to a Foundation Pile if it is of the same suit and one rank higher than the top card in the pile.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Moving Kings
+If you have an empty column in the tableau, you can move a King to that column by double-clicking on the King.
 
-### `npm test`
+### Moving Cards to the Ace Pile
+If you have an Ace that is not currently in a Foundation Pile, you can move it to the Foundation Pile by single-clicking on the Ace. Once an Ace is in a Foundation Pile, you can move cards of the same suit and in ascending order to that pile.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Winning the Game
+You win the game when you have moved all the cards to the Foundation Piles in the correct order.
 
-### `npm run build`
+## How to Play
+1. the cards are shuffled and dealt out onto the Tableau, forming seven columns of cards, with each column containing one more card than the previous column. The first card in each column should be face-up, while the rest of the cards should be face-down.
+2. Move cards around the Tableau and to the Foundation Piles to try and win the game.
+3. If you get stuck, you can click on the deck of cards in the upper-left corner to draw a new card.
+4. If you have an empty column in the tableau, you can move a King to that column by double-clicking on the King.
+5. If you have an Ace that is not currently in a Foundation Pile, you can move it to the Foundation Pile by double-clicking on the Ace.
+6. Keep playing until you have moved all the cards to the Foundation Piles in the correct order.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Conclusion
+That's it! Solitaire is a challenging game that requires both skill and strategy. With practice, you'll be able to win more and more games. Good luck!
