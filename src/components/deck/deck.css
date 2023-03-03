@@ -19,8 +19,9 @@
 .solitaire__tableau-pile {
   display: grid;
   grid-template-columns: repeat(7,1fr);
+  gap: 0.5rem;
   position: relative;
-  right: 290px;
+  right: 295px;
 
 
 }
@@ -31,7 +32,6 @@
 
 }
 .solitaire__card-tableau {
-  border-radius: 15px;
   height: 140px;
   width: 120px;
 }
@@ -54,6 +54,7 @@
   border-radius: 15px;
   height: 140px;
   width: 120px;
+  z-index: -2;
   
 
 }

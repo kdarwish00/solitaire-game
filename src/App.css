@@ -1,9 +1,9 @@
 body {
-    background-color: rgb(2, 100, 2);
+  background-color: rgb(2, 100, 2);
 }
 .window {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    margin: 30px;
-  }
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  margin: 30px;
+}
